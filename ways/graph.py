@@ -41,6 +41,13 @@ class Roads(dict):
     def junctions(self):
         return list(self.values())
 
+    # this method get junction Id and return Junction.
+    def get_junction(self, junction_id):
+        for j in self.junctions():
+            if j.index == junction_id:
+                return j
+        return None
+
     def __init__(self, junction_list):
         super(Roads, self).__init__(junction_list)
         'to change the generation, simply assign to it'
