@@ -15,6 +15,10 @@ def create_random_list(roads):
     for i in range(NUMBER_OF_JUNCTIONS):
         # get Random Starting junction.
         start_junction = roads[random.randint(0, number_of_junctions)]
+        links = list(getattr(start_junction, "links"))
+        # make sure the first junction has links.
+        while len(links) == 0:
+            start_junction = roads[random.randint(0, number_of_junctions)]
         # get list of links.
         current_junction = start_junction
         limit = random.randint(MIN_LENGTH, MAX_LENGTH)
