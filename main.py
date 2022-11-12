@@ -6,25 +6,24 @@ We just parse input and call methods from other modules.
 
 # do NOT import ways. This should be done from other files
 # simply import your modules and call the appropriate functions
-from algorithms import ucs_rout, load_map_from_csv, astar_route, idastar_route, compute_distance
-
+import algorithms
 
 def huristic_function(lat1, lon1, lat2, lon2):
     max_speed = 110
     # calculate air distance / max speed.
-    return compute_distance(lat1, lon1, lat2, lon2) / max_speed
+    return algorithms.compute_distance(lat1, lon1, lat2, lon2) / max_speed
 
 
 def find_ucs_rout(source, target):
-    return ucs_rout(source, target, load_map_from_csv())
+    return algorithms.ucs_rout(source, target, algorithms.load_map_from_csv())
 
 
 def find_astar_route(source, target):
-    return astar_route(source, target)
+    return algorithms.astar_route(source, target)
 
 
 def find_idastar_route(source, target):
-    return idastar_route(source, target)
+    return algorithms.idastar_route(source, target)
     
 
 def dispatch(argv):
