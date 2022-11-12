@@ -4,8 +4,8 @@ import csv
 
 NUMBER_OF_JUNCTIONS = 100
 FILE_NAME = "problems.csv"
-MIN_LENGTH = 5
-MAX_LENGTH = 10
+MIN_LENGTH = 4
+MAX_LENGTH = 7
 
 
 def create_random_list(roads):
@@ -13,12 +13,13 @@ def create_random_list(roads):
     number_of_junctions = len(roads)
     # get Random Junctions.
     for i in range(NUMBER_OF_JUNCTIONS):
+        print(i)
         # get Random Starting junction.
-        start_junction = roads[random.randint(0, number_of_junctions)]
+        start_junction = roads[random.randint(0, number_of_junctions-1)]
         links = list(getattr(start_junction, "links"))
-        # make sure the first junction has links.
-        while len(links) == 0:
-            start_junction = roads[random.randint(0, number_of_junctions)]
+        # make sure the first junction has few links.
+        while len(links) <= 1:
+            start_junction = roads[random.randint(0, number_of_junctions-1)]
         # get list of links.
         current_junction = start_junction
         limit = random.randint(MIN_LENGTH, MAX_LENGTH)
@@ -28,7 +29,7 @@ def create_random_list(roads):
             if links_amount == 0:
                 break
             # get Random one link.
-            next_junction_id = links[random.randint(0, links_amount) - 1].target
+            next_junction_id = links[random.randint(0, links_amount-1)].target
             current_junction = roads[next_junction_id]
         line = str(start_junction.index) + ", " + str(current_junction.index)
         junctions.append(line)

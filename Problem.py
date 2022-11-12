@@ -3,7 +3,10 @@ from ways.info import SPEED_RANGES
 
 
 class Problem:
-
+    """
+    s_start - ID junction
+    goal - ID junction
+    """
     def __init__(self, s_start, goal, graph):
         self.s_start = s_start
         self.goal = goal
