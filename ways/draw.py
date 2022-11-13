@@ -1,9 +1,9 @@
-'accessible using "import ways.draw"'
+"""accessible using "import ways.draw\""""
 
 
-from . import info
-from . import tools
-from . import graph
+from ways import info
+from ways import tools
+from ways import graph
 
 try:
     import matplotlib.pyplot as plt

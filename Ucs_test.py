@@ -1,10 +1,8 @@
 import csv
-from algorithms import ucs_rout, load_map_from_csv
-import os
+from algorithms import ucs_rout, load_map_from_csv, compute_route_time
 
 FILE_NAME = "problems.csv"
-TEXT_FILE_NAME = "UCSRuns.txt"
-ROOT_DIR = os.path.abspath(os.curdir)
+TEXT_FILE_NAME = "results/UCSRuns.txt"
 
 
 if __name__ == '__main__':
@@ -15,11 +13,12 @@ if __name__ == '__main__':
     with open(FILE_NAME) as csv_file:
         csv_reader = csv.reader(csv_file)
         for junction in csv_reader:
-            route_and_time = ucs_rout(int(junction[0]), int(junction[1]), graph)
-            # TODO remove this
-            print(route_and_time)
+            route = ucs_rout(int(junction[0]), int(junction[1]), graph)
+            print(route)
+            time = compute_route_time(route, graph)
+            print(time)
             # time = compute_route_time(route)
-            file.write(str(route_and_time) + " - " + "\r")
+            file.write(str(route) + " - " + str(time) + "\r")
             # file.write('\r')
             # TODO remove this
             # break

@@ -21,7 +21,7 @@ def compute_route_time(route, graph):
         time += compute_distance(getattr(source, "lat"), getattr(source, "lon"),
                                  getattr(target, "lat"), getattr(target, "lon"))
         # print("time is: %s" % time)
-    return str(route) + " - " + str(time)
+    return time
 
 
 def best_first_graph_search(problem, f):
@@ -32,7 +32,7 @@ def best_first_graph_search(problem, f):
     while frontier:
         node = frontier.pop()
         if problem.is_goal(node.state):
-            return compute_route_time(node.solution(), problem.graph)
+            return node.solution()
         closed_list.add(node.state)
         for child in node.expand(problem):
             if child.state not in closed_list and child not in frontier:
@@ -43,18 +43,18 @@ def best_first_graph_search(problem, f):
     return None
 
 
-def astar_route(source, target):
+def astar_route(source, target, graph):
     def g(node):
         return node.path_cost
 
-    problem = Problem(source, target, load_map_from_csv())
-    junction_start = problem.graph.get_junction(source)
-    junction_end = problem.graph.get_junction(target)
+    problem = Problem(source, target, graph)
+    junction_start = graph.get_junction(source)
+    junction_end = graph.get_junction(target)
     lat1 = getattr(junction_start, "lat")
-    lat2 = getattr(junction_start, "lat")
-    lon1 = getattr(junction_end, "lon")
+    lon1 = getattr(junction_start, "lon")
+    lat2 = getattr(junction_end, "lat")
     lon2 = getattr(junction_end, "lon")
-    print("heuristic cost: ", huristic_function(lat1, lon1, lat2, lon2))
+    # print("heuristic cost: ", huristic_function(lat1, lon1, lat2, lon2))
     return best_first_graph_search(problem, f=lambda n: g(n) + huristic_function(lat1, lon1, lat2, lon2))
 
 

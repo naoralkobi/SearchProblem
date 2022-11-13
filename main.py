@@ -8,6 +8,7 @@ We just parse input and call methods from other modules.
 # simply import your modules and call the appropriate functions
 import algorithms
 
+
 def huristic_function(lat1, lon1, lat2, lon2):
     max_speed = 110
     # calculate air distance / max speed.
@@ -19,7 +20,7 @@ def find_ucs_rout(source, target):
 
 
 def find_astar_route(source, target):
-    return algorithms.astar_route(source, target)
+    return algorithms.astar_route(source, target, algorithms.load_map_from_csv())
 
 
 def find_idastar_route(source, target):
