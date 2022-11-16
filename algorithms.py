@@ -1,3 +1,5 @@
+import math
+
 from Problem import Problem
 from ways import load_map_from_csv, compute_distance, info
 from Node import Node
@@ -60,9 +62,47 @@ def astar_route(source, target, graph):
     lon1 = getattr(junction_start, "lon")
     lat2 = getattr(junction_end, "lat")
     lon2 = getattr(junction_end, "lon")
-    # print("heuristic cost: ", huristic_function(lat1, lon1, lat2, lon2))
     return best_first_graph_search(problem, f=lambda n: g(n) + huristic_function(lat1, lon1, lat2, lon2))
 
 
-def idastar_route(source, target):
-    return None
+def idastar_route(source, target, graph):
+    problem = Problem(source, target, graph)
+
+    def g(node):
+        return node.path_cost
+
+    junction_start = graph.get_junction(source)
+    junction_end = graph.get_junction(target)
+    lat1 = getattr(junction_start, "lat")
+    lon1 = getattr(junction_start, "lon")
+    lat2 = getattr(junction_end, "lat")
+    lon2 = getattr(junction_end, "lon")
+
+    return idastar_search(problem, f=lambda n: g(n) + huristic_function(lat1, lon1, lat2, lon2))
+
+
+def idastar_search(problem, f):
+    root = Node(problem.s_start)
+    f_limit = f(root)
+    next_f = math.inf
+    while True:
+        solution, f_limit = dfs_contour(root, f_limit, next_f, f, problem)
+        if solution is not None:
+            return solution
+        if f_limit == math.inf:
+            return None
+
+
+def dfs_contour(node, f_limit, next_f, f, problem):
+    if f(node) > f_limit:
+        return None, min(f(node), next_f)
+    if problem.is_goal(node.state):
+        return node.solution(), f_limit
+    if node is None:
+        pass
+    for n in node.expand(problem):
+        solution, new_f = dfs_contour(n, f_limit, next_f, f, problem)
+        if solution is not None:
+            return solution, f_limit
+        next_f = min(next_f, new_f)
+    return None, next_f

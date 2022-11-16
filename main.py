@@ -25,7 +25,7 @@ def find_astar_route(source, target):
 
 
 def find_idastar_route(source, target):
-    return algorithms.idastar_route(source, target)
+    return algorithms.idastar_route(source, target, algorithms.load_map_from_csv())
     
 
 def dispatch(argv):

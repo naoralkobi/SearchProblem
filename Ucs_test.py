@@ -15,14 +15,9 @@ if __name__ == '__main__':
         for junction in csv_reader:
             problem = Problem(int(junction[0]), int(junction[1]), graph)
             route = ucs_rout(problem)
-            print(route)
             time = compute_route_time(route, graph)
-            print(time)
             list_to_string = str(route).strip('[]')
-
-            # time = compute_route_time(route)
-            file.write(list_to_string.replace(',', '') + " - " + str(time) + "\r")
-            # file.write('\r')
-            # TODO remove this
-            # break
+            line = list_to_string.replace(',', '') + " - " + str(time) + "\r"
+            print(line)
+            file.write(line)
     file.close()

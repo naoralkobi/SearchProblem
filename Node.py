@@ -18,7 +18,6 @@ class Node:
     def children(self, roads, f):
         return [Node(link.target, self, self.path_cost + f(link)) for link in roads[self.state].links]
 
-
     def expand(self, problem):
         return self.ordered_set([self.child_node(problem, action) for action in problem.actions(self.state)])
 

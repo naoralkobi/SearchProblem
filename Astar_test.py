@@ -31,9 +31,9 @@ if __name__ == '__main__':
             lon1 = getattr(junction_start, "lon")
             lat2 = getattr(junction_end, "lat")
             lon2 = getattr(junction_end, "lon")
-
+            list_to_string = str(route).strip('[]')
             heuristic = huristic_function(lat1, lon1, lat2, lon2)
-            line = str(route) + " Real cost: " + str(time) + " heuristic cost: " + str(heuristic) + "\r"
+            line = list_to_string.replace(',', '') + " - " + str(time) + " - " + str(heuristic) + "\r"
             print(line)
             heuristic_cost.append(heuristic)
             real_cost.append(time)
@@ -44,9 +44,5 @@ if __name__ == '__main__':
     plt.plot(heuristic_cost, real_cost, 'o')
     plt.xlabel('heuristic cost')
     plt.ylabel('Real cost')
-    # plt.xticks(fontsize=7)
-    # plt.yticks(fontsize=7)
-    # plt.xticks(rotation=30)
-    # plt.yticks(rotation=30)
     plt.show()
 
