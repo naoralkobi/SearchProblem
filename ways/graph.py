@@ -48,6 +48,14 @@ class Roads(dict):
                 return junction
         return None
 
+    def get_link(self, source_id, target_id):
+        for junction in self.junctions():
+            if junction.index == source_id:
+                for link in junction.links:
+                    if link.target == target_id:
+                        return link
+        return None
+
     def __init__(self, junction_list):
         super(Roads, self).__init__(junction_list)
         'to change the generation, simply assign to it'

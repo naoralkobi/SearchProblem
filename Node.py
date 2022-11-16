@@ -15,6 +15,10 @@ class Node:
     def ordered_set(self, coll):
         return dict.fromkeys(coll).keys()
 
+    def children(self, roads, f):
+        return [Node(link.target, self, self.path_cost + f(link)) for link in roads[self.state].links]
+
+
     def expand(self, problem):
         return self.ordered_set([self.child_node(problem, action) for action in problem.actions(self.state)])
 
@@ -26,7 +30,6 @@ class Node:
 
     def solution(self):
         return [node.state for node in self.path()]
-
 
     def path(self):
         node, path_back = self, []

@@ -1,15 +1,14 @@
 from Problem import Problem
-from ways import load_map_from_csv, compute_distance
+from ways import load_map_from_csv, compute_distance, info
 from Node import Node
 from main import huristic_function
 from PriorityQueue import PriorityQueue
 
 
-def ucs_rout(source, target, graph):
-    problem = Problem(source, target, graph)
-
-    def g(node):
-        return node.path_cost
+def ucs_rout(problem):
+    def g(link):
+        time = link.distance / max(info.SPEED_RANGES[link.highway_type]) / 1000
+        return time
     return best_first_graph_search(problem, f=g)
 
 
@@ -18,26 +17,33 @@ def compute_route_time(route, graph):
     for i in range(len(route) - 1):
         source = graph.get_junction(route[i])
         target = graph.get_junction(route[i + 1])
-        time += compute_distance(getattr(source, "lat"), getattr(source, "lon"),
-                                 getattr(target, "lat"), getattr(target, "lon"))
-        # print("time is: %s" % time)
+        for link in source.links:
+            if target.index == link.target:
+                time += link.distance / max(info.SPEED_RANGES[link.highway_type]) / 1000
     return time
 
 
+# This implementation is token from lecture 2.
 def best_first_graph_search(problem, f):
-    node = Node(problem.s_start)
-    frontier = PriorityQueue(f)
-    frontier.append(node)
+    # create PriorityQueue
+    frontier = PriorityQueue(lambda x: x.path_cost)
+    frontier.append(Node(problem.s_start))
     closed_list = set()
     while frontier:
+        # take out the minimum from top.
         node = frontier.pop()
+        # if finish
         if problem.is_goal(node.state):
             return node.solution()
+        # add it to close list.
         closed_list.add(node.state)
+        # expand return all the possible actions.
         for child in node.expand(problem):
+            # new child.
             if child.state not in closed_list and child not in frontier:
                 frontier.append(child)
-            elif child in frontier and f(child) < frontier[child]:
+            # has better path_cost
+            elif child in frontier and child.path_cost < frontier[child]:
                 del frontier[child]
                 frontier.append(child)
     return None

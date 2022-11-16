@@ -23,8 +23,9 @@ class Problem:
     def is_goal(self, s):
         return s == self.goal
 
-    def step_cost(self, s, a):
-        return (a.distance / 1000) / SPEED_RANGES[a.highway_type][1]
+    def step_cost(self, s, link):
+        # KM / H
+        return (link.distance / 1000) / SPEED_RANGES[link.highway_type][1]
 
     def state_str(self, s):
         return s

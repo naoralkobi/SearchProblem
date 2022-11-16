@@ -16,7 +16,8 @@ def huristic_function(lat1, lon1, lat2, lon2):
 
 
 def find_ucs_rout(source, target):
-    return algorithms.ucs_rout(source, target, algorithms.load_map_from_csv())
+    problem = algorithms.Problem(source, target, algorithms.load_map_from_csv())
+    return algorithms.ucs_rout(problem)
 
 
 def find_astar_route(source, target):
