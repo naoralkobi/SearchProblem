@@ -66,11 +66,10 @@ def astar_route(source, target, graph):
 
 
 def idastar_route(source, target, graph):
-    problem = Problem(source, target, graph)
-
     def g(node):
         return node.path_cost
 
+    problem = Problem(source, target, graph)
     junction_start = graph.get_junction(source)
     junction_end = graph.get_junction(target)
     lat1 = getattr(junction_start, "lat")
@@ -82,18 +81,18 @@ def idastar_route(source, target, graph):
 
 
 def idastar_search(problem, f):
-    root = Node(problem.s_start)
-    f_limit = f(root)
+    source = Node(problem.s_start)
+    f_limit = f(source)
     next_f = math.inf
     while True:
-        solution, f_limit = dfs_contour(root, f_limit, next_f, f, problem)
-        if solution is not None:
+        solution, f_limit = depth_limited_search(source, f_limit, next_f, f, problem)
+        if solution:
             return solution
         if f_limit == math.inf:
             return None
 
 
-def dfs_contour(node, f_limit, next_f, f, problem):
+def depth_limited_search(node, f_limit, next_f, f, problem):
     if f(node) > f_limit:
         return None, min(f(node), next_f)
     if problem.is_goal(node.state):
@@ -101,7 +100,7 @@ def dfs_contour(node, f_limit, next_f, f, problem):
     if node is None:
         pass
     for n in node.expand(problem):
-        solution, new_f = dfs_contour(n, f_limit, next_f, f, problem)
+        solution, new_f = depth_limited_search(n, f_limit, next_f, f, problem)
         if solution is not None:
             return solution, f_limit
         next_f = min(next_f, new_f)

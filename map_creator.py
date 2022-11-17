@@ -34,6 +34,6 @@ if __name__ == '__main__':
             fig = plt.gcf()
             plot_path(graph, route)
             plt.show()
-            fig.savefig(FOLDER_NAME + '/solution-' + str(counter) + '-' + junction[0] + '-' + junction[1] + 'png', bbox_inches='tight')
+            fig.savefig(FOLDER_NAME + '/solution' + '-' + junction[0] + '-' + junction[1], bbox_inches='tight')
             plt.close()
 
