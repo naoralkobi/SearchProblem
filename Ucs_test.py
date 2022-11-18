@@ -21,7 +21,7 @@ if __name__ == '__main__':
             real_time = compute_route_time(route, graph)
             list_to_string = str(route).strip('[]')
             line = list_to_string.replace(',', '') + " - " + str(real_time) + "\r"
-            print(line)
+            # print(line)
             file.write(line)
-        print(f'ucs test time: {time_counter / 100}')
+        # print(f'ucs test time: {time_counter / 100}')
     file.close()

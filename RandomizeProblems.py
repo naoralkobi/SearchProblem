@@ -5,7 +5,7 @@ import csv
 NUMBER_OF_JUNCTIONS = 100
 FILE_NAME = "problems.csv"
 MIN_LENGTH = 3
-MAX_LENGTH = 7
+MAX_LENGTH = 5
 LIMIT = 100
 
 

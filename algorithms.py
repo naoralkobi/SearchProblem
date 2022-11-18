@@ -1,5 +1,4 @@
 import math
-
 from Problem import Problem
 from ways import load_map_from_csv, compute_distance, info
 from Node import Node
@@ -45,17 +44,19 @@ def best_first_graph_search(problem, f):
             if child.state not in closed_list and child not in frontier:
                 frontier.append(child)
             # has better path_cost
-            elif child in frontier and child.path_cost < frontier[child]:
+            elif child in frontier and f(problem.graph.get_link(node.state, child.state)) < frontier[child]:
                 del frontier[child]
                 frontier.append(child)
     return None
 
 
 def astar_route(source, target, graph):
-    def g(node):
-        return node.path_cost
+    def g(link):
+        time = link.distance / max(info.SPEED_RANGES[link.highway_type]) / 1000
+        return time
 
     problem = Problem(source, target, graph)
+    # TODO maybe change it
     junction_start = graph.get_junction(source)
     junction_end = graph.get_junction(target)
     lat1 = getattr(junction_start, "lat")

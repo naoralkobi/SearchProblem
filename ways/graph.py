@@ -41,7 +41,7 @@ class Roads(dict):
     def junctions(self):
         return list(self.values())
 
-    # this method get junction Id and return Junction.
+    # this method get junction id and return Junction.
     def get_junction(self, junction_id):
         for junction in self.junctions():
             if junction.index == junction_id:

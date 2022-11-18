@@ -37,8 +37,8 @@ if __name__ == '__main__':
             list_to_string = str(route).strip('[]')
 
             line = list_to_string.replace(',', '') + " - " + str(heuristic) + "\r"
-            print(line)
+            # print(line)
             file.write(line)
-        print(f'ID ASTAR test time: {time_counter / 5}')
+        # print(f'ID ASTAR test time: {time_counter / 5}')
     file.close()
 
