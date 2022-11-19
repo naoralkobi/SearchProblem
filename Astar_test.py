@@ -3,8 +3,6 @@ from Problem import Problem
 from algorithms import load_map_from_csv, astar_route, compute_route_time, huristic_function
 import matplotlib.pyplot as plt
 import time
-import re
-
 FILE_NAME = "problems.csv"
 TEXT_FILE_NAME = "results/AStarRuns.txt"
 
@@ -20,23 +18,15 @@ if __name__ == '__main__':
         csv_reader = csv.reader(csv_file)
         time_counter = 0
         for junction in csv_reader:
-            source = int(junction[0])
-            target = int(junction[1])
+            problem = Problem(int(junction[0]), int(junction[1]), graph)
             start = time.perf_counter()
-            route = astar_route(source, target, graph)
+            route = astar_route(problem)
             time_counter = time_counter + time.perf_counter() - start
             real_time = compute_route_time(route, graph)
-            problem = Problem(source, target, graph)
-
-            junction_start = graph.get_junction(source)
-            junction_end = graph.get_junction(target)
-
-            lat1 = getattr(junction_start, "lat")
-            lon1 = getattr(junction_start, "lon")
-            lat2 = getattr(junction_end, "lat")
-            lon2 = getattr(junction_end, "lon")
-            list_to_string = str(route).strip('[]')
+            lat1, lon1 = problem.graph.get_locations(problem.s_start)
+            lat2, lon2 = problem.graph.get_locations(problem.goal)
             heuristic = huristic_function(lat1, lon1, lat2, lon2)
+            list_to_string = str(route).strip('[]')
             line = list_to_string.replace(',', '') + " - " + str(real_time) + " - " + str(heuristic) + "\r"
             # print(line)
             heuristic_cost.append(heuristic)

@@ -21,11 +21,13 @@ def find_ucs_rout(source, target):
 
 
 def find_astar_route(source, target):
-    return algorithms.astar_route(source, target, algorithms.load_map_from_csv())
+    problem = algorithms.Problem(source, target, algorithms.load_map_from_csv())
+    return algorithms.astar_route(problem)
 
 
 def find_idastar_route(source, target):
-    return algorithms.idastar_route(source, target, algorithms.load_map_from_csv())
+    problem = algorithms.Problem(source, target, algorithms.load_map_from_csv())
+    return algorithms.idastar_route(problem)
     
 
 def dispatch(argv):

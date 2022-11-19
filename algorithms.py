@@ -18,9 +18,9 @@ def compute_route_time(route, graph):
     for i in range(len(route) - 1):
         source = graph.get_junction(route[i])
         target = graph.get_junction(route[i + 1])
-        for link in source.links:
-            if target.index == link.target:
-                time += link.distance / max(info.SPEED_RANGES[link.highway_type]) / 1000
+        link = graph.get_link(source, target)
+        distance_km = link.distance / 1000
+        time = time + distance_km / max(info.SPEED_RANGES[link.highway_type])
     return time
 
 
@@ -50,34 +50,22 @@ def best_first_graph_search(problem, f):
     return None
 
 
-def astar_route(source, target, graph):
+def astar_route(problem):
     def g(link):
         time = link.distance / max(info.SPEED_RANGES[link.highway_type]) / 1000
         return time
 
-    problem = Problem(source, target, graph)
-    # TODO maybe change it
-    junction_start = graph.get_junction(source)
-    junction_end = graph.get_junction(target)
-    lat1 = getattr(junction_start, "lat")
-    lon1 = getattr(junction_start, "lon")
-    lat2 = getattr(junction_end, "lat")
-    lon2 = getattr(junction_end, "lon")
+    lat1, lon1 = problem.graph.get_locations(problem.s_start)
+    lat2, lon2 = problem.graph.get_locations(problem.goal)
     return best_first_graph_search(problem, f=lambda n: g(n) + huristic_function(lat1, lon1, lat2, lon2))
 
 
-def idastar_route(source, target, graph):
+def idastar_route(problem):
     def g(node):
         return node.path_cost
 
-    problem = Problem(source, target, graph)
-    junction_start = graph.get_junction(source)
-    junction_end = graph.get_junction(target)
-    lat1 = getattr(junction_start, "lat")
-    lon1 = getattr(junction_start, "lon")
-    lat2 = getattr(junction_end, "lat")
-    lon2 = getattr(junction_end, "lon")
-
+    lat1, lon1 = problem.graph.get_locations(problem.s_start)
+    lat2, lon2 = problem.graph.get_locations(problem.goal)
     return idastar_search(problem, f=lambda n: g(n) + huristic_function(lat1, lon1, lat2, lon2))
 
 
