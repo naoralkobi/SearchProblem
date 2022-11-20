@@ -52,8 +52,8 @@ def astar_route(problem):
         return node.path_cost
 
     def h(node):
-        lat1, lon1 = problem.graph.get_locations(node.state)
-        return huristic_function(lat1, lon1, problem.goal_junction.lat, problem.goal_junction.lon)
+        junction = problem.graph.get_junction(node.state)
+        return huristic_function(junction.lat, junction.lon, problem.goal_junction.lat, problem.goal_junction.lon)
 
     return best_first_graph_search(problem, f=lambda n: g(n) + h(n))
 
@@ -63,8 +63,8 @@ def idastar_route(problem):
         return node.path_cost
 
     def h(node):
-        lat1, lon1 = problem.graph.get_locations(node.state)
-        return huristic_function(lat1, lon1, problem.goal_junction.lat, problem.goal_junction.lon)
+        junction = problem.graph.get_junction(node.state)
+        return huristic_function(junction.lat, junction.lon, problem.goal_junction.lat, problem.goal_junction.lon)
 
     return idastar_search(problem, f=lambda n: g(n) + h(n))
 

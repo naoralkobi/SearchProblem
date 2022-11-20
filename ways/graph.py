@@ -54,9 +54,9 @@ class Roads(dict):
         return None
 
     def get_locations(self, junction_id):
-        for junction in self.junctions():
-            if junction.index == junction_id:
-                return junction.lat, junction.lon
+        junction = self.get_junction(junction_id)
+        return junction.lat, junction.lon
+
 
     def __init__(self, junction_list):
         super(Roads, self).__init__(junction_list)
