@@ -27,11 +27,11 @@ def main():
             list_to_string = str(route).strip('[]')
 
             line = list_to_string.replace(',', '') + " - " + str(format(heuristic, ".4f")) + "\r"
-            print(line)
+            # print(line)
             file.write(line)
         avg_time = time_counter / 10
         avg_time = format(avg_time, ".4f")
-        print(f'ID ASTAR test time: %s' % avg_time)
+        # print(f'ID ASTAR test time: %s' % avg_time)
     file.close()
 
 

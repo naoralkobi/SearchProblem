@@ -50,19 +50,19 @@ def dispatch(argv):
 
 if __name__ == '__main__':
     from sys import argv
-    # dispatch(argv)
+    dispatch(argv)
     """
     for creating 100 random problems
     """
-    RandomizeProblems.main()
+    # RandomizeProblems.main()
     """
     for running UCS algo and writing results to UCSRuns.txt
     """
-    Ucs_test.main()
+    # Ucs_test.main()
     """
     for running A* algo and writing results to AStarRuns.txt
     """
-    Astar_test.main()
+    # Astar_test.main()
     """
     for running IDA* algo and writing results to AStarRuns.txt
     """

@@ -28,13 +28,13 @@ def main():
             heuristic = algorithms.huristic_function(lat1, lon1, lat2, lon2)
             list_to_string = str(route).strip('[]')
             line = list_to_string.replace(',', '') + " - " + str(format(real_time, ".4f")) + " - " + str(format(heuristic, ".4f")) + "\r"
-            print(line)
+            # print(line)
             heuristic_cost.append(heuristic)
             real_cost.append(real_time)
             file.write(line)
         avg_time = time_counter / 100
         avg_time = format(avg_time, ".4f")
-        print(f'ASTAR test time: %s' % avg_time)
+        # print(f'ASTAR test time: %s' % avg_time)
     file.close()
     # Draw the graph
     plt.plot(heuristic_cost, real_cost, 'o')
