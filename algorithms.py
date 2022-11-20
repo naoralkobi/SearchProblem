@@ -7,9 +7,8 @@ from PriorityQueue import PriorityQueue
 
 
 def ucs_rout(problem):
-    def g(link):
-        time = link.distance / max(info.SPEED_RANGES[link.highway_type]) / 1000
-        return time
+    def g(node):
+        return node.path_cost
     return best_first_graph_search(problem, f=g)
 
 
@@ -25,7 +24,7 @@ def compute_route_time(route, graph):
 # This implementation is token from lecture 2.
 def best_first_graph_search(problem, f):
     # create PriorityQueue
-    frontier = PriorityQueue(lambda x: x.path_cost)
+    frontier = PriorityQueue(f)
     frontier.append(Node(problem.s_start))
     closed_list = set()
     while frontier:
@@ -42,29 +41,32 @@ def best_first_graph_search(problem, f):
             if child.state not in closed_list and child not in frontier:
                 frontier.append(child)
             # has better path_cost
-            elif child in frontier and f(problem.graph.get_link(node.state, child.state)) < frontier[child]:
+            elif child in frontier and f(child) < frontier[child]:
                 del frontier[child]
                 frontier.append(child)
     return None
 
 
 def astar_route(problem):
-    def g(link):
-        time = link.distance / max(info.SPEED_RANGES[link.highway_type]) / 1000
-        return time
+    def g(node):
+        return node.path_cost
 
-    lat1, lon1 = problem.graph.get_locations(problem.s_start)
-    lat2, lon2 = problem.graph.get_locations(problem.goal)
-    return best_first_graph_search(problem, f=lambda n: g(n) + huristic_function(lat1, lon1, lat2, lon2))
+    def h(node):
+        lat1, lon1 = problem.graph.get_locations(node.state)
+        return huristic_function(lat1, lon1, problem.goal_junction.lat, problem.goal_junction.lon)
+
+    return best_first_graph_search(problem, f=lambda n: g(n) + h(n))
 
 
 def idastar_route(problem):
     def g(node):
         return node.path_cost
 
-    lat1, lon1 = problem.graph.get_locations(problem.s_start)
-    lat2, lon2 = problem.graph.get_locations(problem.goal)
-    return idastar_search(problem, f=lambda n: g(n) + huristic_function(lat1, lon1, lat2, lon2))
+    def h(node):
+        lat1, lon1 = problem.graph.get_locations(node.state)
+        return huristic_function(lat1, lon1, problem.goal_junction.lat, problem.goal_junction.lon)
+
+    return idastar_search(problem, f=lambda n: g(n) + h(n))
 
 
 def idastar_search(problem, f):

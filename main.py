@@ -7,6 +7,11 @@ We just parse input and call methods from other modules.
 # do NOT import ways. This should be done from other files
 # simply import your modules and call the appropriate functions
 import algorithms
+import RandomizeProblems
+import Ucs_test
+import Astar_test
+import IDAstar_test
+import map_creator
 
 
 def huristic_function(lat1, lon1, lat2, lon2):
@@ -45,4 +50,24 @@ def dispatch(argv):
 
 if __name__ == '__main__':
     from sys import argv
-    dispatch(argv)
+    # dispatch(argv)
+    """
+    for creating 100 random problems
+    """
+    # RandomizeProblems.main()
+    """
+    for running UCS algo and writing results to UCSRuns.txt
+    """
+    # Ucs_test.main()
+    """
+    for running A* algo and writing results to AStarRuns.txt
+    """
+    # Astar_test.main()
+    """
+    for running IDA* algo and writing results to AStarRuns.txt
+    """
+    # IDAstar_test.main()
+    """
+    for running map creator and writing results to AStarRuns.txt
+    """
+    # map_creator.main()

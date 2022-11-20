@@ -43,10 +43,7 @@ class Roads(dict):
 
     # this method get junction id and return Junction.
     def get_junction(self, junction_id):
-        for junction in self.junctions():
-            if junction.index == junction_id:
-                return junction
-        return None
+        return list(self.values())[int(junction_id)]
 
     def get_link(self, source_id, target_id):
         for junction in self.junctions():

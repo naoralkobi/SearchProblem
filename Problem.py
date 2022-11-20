@@ -11,6 +11,7 @@ class Problem:
         self.s_start = s_start
         self.goal = goal
         self.graph = graph
+        self.goal_junction = graph.get_junction(goal)
 
     def actions(self, s):
         return self.graph[s].links

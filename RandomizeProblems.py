@@ -68,7 +68,12 @@ def write_to_file(junctions):
     f.close()
 
 
-if __name__ == '__main__':
+def main():
     roads = load_map_from_csv()
     junctions = create_random_list(roads)
     write_to_file(junctions)
+
+
+if __name__ == '__main__':
+    main()
+
