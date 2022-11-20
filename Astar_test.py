@@ -28,11 +28,11 @@ if __name__ == '__main__':
             heuristic = huristic_function(lat1, lon1, lat2, lon2)
             list_to_string = str(route).strip('[]')
             line = list_to_string.replace(',', '') + " - " + str(real_time) + " - " + str(heuristic) + "\r"
-            # print(line)
+            print(line)
             heuristic_cost.append(heuristic)
             real_cost.append(real_time)
             file.write(line)
-        # print(f'ASTAR test time: {time_counter / 100}')
+        print(f'ASTAR test time: {time_counter / 100}')
     file.close()
     # Draw the graph
     plt.plot(heuristic_cost, real_cost, 'o')

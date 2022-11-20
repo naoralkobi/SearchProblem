@@ -16,9 +16,7 @@ def ucs_rout(problem):
 def compute_route_time(route, graph):
     time = 0
     for i in range(len(route) - 1):
-        source = graph.get_junction(route[i])
-        target = graph.get_junction(route[i + 1])
-        link = graph.get_link(source, target)
+        link = graph.get_link(route[i], route[i + 1])
         distance_km = link.distance / 1000
         time = time + distance_km / max(info.SPEED_RANGES[link.highway_type])
     return time
