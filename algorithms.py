@@ -32,7 +32,8 @@ def best_first_graph_search(problem, f):
         node = frontier.pop()
         # if finish
         if problem.is_goal(node.state):
-            return node.solution()
+            # print(node.path_cost)
+            return node.solution(), node.path_cost
         # add it to close list.
         closed_list.add(node.state)
         # expand return all the possible actions.
@@ -52,8 +53,8 @@ def astar_route(problem):
         return node.path_cost
 
     def h(node):
-        junction = problem.graph.get_junction(node.state)
-        return huristic_function(junction.lat, junction.lon, problem.goal_junction.lat, problem.goal_junction.lon)
+        # junction = problem.graph.get_junction(node.state)
+        return huristic_function(problem.graph[node.state].lat, problem.graph[node.state].lon, problem.goal_junction.lat, problem.goal_junction.lon)
 
     return best_first_graph_search(problem, f=lambda n: g(n) + h(n))
 
@@ -63,8 +64,8 @@ def idastar_route(problem):
         return node.path_cost
 
     def h(node):
-        junction = problem.graph.get_junction(node.state)
-        return huristic_function(junction.lat, junction.lon, problem.goal_junction.lat, problem.goal_junction.lon)
+        # junction = problem.graph.get_junction(node.state)
+        return huristic_function(problem.graph[node.state].lat, problem.graph[node.state].lon, problem.goal_junction.lat, problem.goal_junction.lon)
 
     return idastar_search(problem, f=lambda n: g(n) + h(n))
 

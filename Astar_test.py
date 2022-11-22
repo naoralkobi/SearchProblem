@@ -20,9 +20,9 @@ def main():
         for junction in csv_reader:
             problem = Problem(int(junction[0]), int(junction[1]), graph)
             start = time.perf_counter()
-            route = algorithms.astar_route(problem)
+            route, real_time = algorithms.astar_route(problem)
             time_counter = time_counter + time.perf_counter() - start
-            real_time = algorithms.compute_route_time(route, graph)
+            # real_time = algorithms.compute_route_time(route, graph)
             lat1, lon1 = problem.graph.get_locations(problem.s_start)
             lat2, lon2 = problem.graph.get_locations(problem.goal)
             heuristic = algorithms.huristic_function(lat1, lon1, lat2, lon2)
@@ -31,10 +31,10 @@ def main():
             # print(line)
             heuristic_cost.append(heuristic)
             real_cost.append(real_time)
-            file.write(line)
+            # file.write(line)
         avg_time = time_counter / 100
         avg_time = format(avg_time, ".4f")
-        # print(f'ASTAR test time: %s' % avg_time)
+        print(f'ASTAR test time: %s' % avg_time)
     file.close()
     # Draw the graph
     plt.plot(heuristic_cost, real_cost, 'o')
