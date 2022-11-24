@@ -31,10 +31,10 @@ def main():
             # print(line)
             heuristic_cost.append(heuristic)
             real_cost.append(real_time)
-            # file.write(line)
+            file.write(line)
         avg_time = time_counter / 100
         avg_time = format(avg_time, ".4f")
-        print(f'ASTAR test time: %s' % avg_time)
+        # print(f'ASTAR test time: %s' % avg_time)
     file.close()
     # Draw the graph
     plt.plot(heuristic_cost, real_cost, 'o')

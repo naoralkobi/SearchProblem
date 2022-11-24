@@ -54,7 +54,7 @@ if __name__ == '__main__':
     """
     for creating 100 random problems
     """
-    RandomizeProblems.main()
+    # RandomizeProblems.main()
     """
     for running UCS algo and writing results to UCSRuns.txt
     """
@@ -70,4 +70,4 @@ if __name__ == '__main__':
     """
     for running map creator and writing results to AStarRuns.txt
     """
-    map_creator.main()
+    # map_creator.main()
