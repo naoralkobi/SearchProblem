@@ -1,3 +1,4 @@
+# Naor Alkobi 315679985
 '''
 This file should be runnable to print map_statistics using 
 $ python stats.py

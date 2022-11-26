@@ -1,3 +1,4 @@
+# Naor Alkobi 315679985
 from ways import load_map_from_csv
 import random
 import csv
